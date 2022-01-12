@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %} {% if category %} {{ category.category_name }} {% else %}Kijani Grocery Store Catalog{% endif %}{% endblock title %}
+
+{% block content %}
+
+    <section class="catalog" id="catalog">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="products">
+                        <h1>{% if category %}{{ category.name }} {% else %}Products {% endif %}</h1>
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            {% for product in products %}
+                                <div class="col product">
+                                <div class="card h-100">
+                                    <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}"></a>
+                                    <div class="card-body">
+                                        <a class="card-title h5" href="{{ product.get_absolute_url }}">{{ product.product_name }}</a>
+                                        <p class="card-text">{{ product.product_name }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="fs-4 fw-bolder">Ksh: {{ product.price }}</small>
+                                    </div>
+                                </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 side">
+                    <h3>Categories</h3>
+                    <ul class="list-group">
+                        {% for categor in categories %}
+                            <a class="list-group-item list-group-item-action {% if category.slug == categor.slug %}active bg-success {% endif %}" href="{{ categor.get_absolute_url }}">{{ categor.category_name }}</a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock content %}

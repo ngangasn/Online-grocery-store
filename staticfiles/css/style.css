@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Licorice&family=Mochiy+Pop+P+One&family=Pacifico&display=swap');
+
+
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+*{
+    font-family: 'Crimson Pro', serif;
+
+}
+.navbar-brand {
+    font-size: 2rem;
+}
+h1, h2, h3, h4, h5, .navbar-brand {
+    font-family: 'Mochiy Pop P One', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    line-height: 2; 
+}
+.root {
+    flex: 1;
+}
+footer {
+    flex: 0;
+}
+/* .card-img-top {
+    max-height: 18rem;
+    min-height: 12rem;
+    object-fit: cover;
+        
+} */
+a {
+    text-decoration: none;
+}

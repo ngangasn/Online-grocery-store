@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-success">
+    <div class="container">
+      <a class="navbar-brand fw-bolder text-uppercase" href="{% url 'shop:products' %}">Kijani</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'shop:products' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About us</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {% if category %} {{ category.category_name }}  {% else %} All {% endif %}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for categor in categories %}
+                    <li class="{% if category.slug == categor.slug %} active fw-bolder text-danger {% endif %}"><a class="dropdown-item" href="{{ categor.get_absolute_url }}">{{ categor.category_name }}</a></li>
+                {% endfor %}
+            </ul>
+          </li> 
+        </ul>
+        <ul class="navbar-nav mb-2 mb-lg-0 d-flex fw-bold"> 
+            <li class="nav-item cart ms-auto my-2">
+                {% with total_items=cart|length %}
+                  {% if total_items %}
+                    <span class="fw-bold">
+                      <a href="{% url 'store_cart:cart_detail' %}">
+                        <i class="fas fa-shopping-cart me-2 fa-2x"></i>
+                      </a>
+                      Ksh: {{ cart.get_total_price }}
+                    </span>
+                  {% else %}
+                    <span class="fw-bold"><i class="fas fa-shopping-cart me-2 fa-2x"></i>$0.00</span>
+                  {% endif %}
+                {% endwith %}
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+

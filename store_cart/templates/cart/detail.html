@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Your shopping cart{% endblock title %}
+
+{% block content %}
+    <section class="store-cart">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h1>Your shopping cart</h1>
+                    <table class="table table-success table-borderless table-striped table-hover table-sm">
+                        <thead>
+                          <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Update</th>
+                            <th scope="col">Remove</th>
+                            <th scope="col">Unit price</th>
+                            <th scope="col">Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                    <tr class="table-active">
+                                        <td class="w-25"><a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="img-fluid w-50" alt=""></a></td>
+                                        <td>{{ product.product_name }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>
+                                            <form action="{% url 'store_cart:add_items_to_cart' product.id %}" method="post">{% csrf_token %}
+                                                {{ item.update_quantity_form.quantity }}
+                                                {{ item.update_quantity_form.override }}
+                                                <input type="submit" class="btn btn-success ms-2" value="Update">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="{% url 'store_cart:remove_item_from_cart' product.id %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="submit" class="btn btn-danger ms-2" value="Remove">
+                                            </form>    
+                                        </td>
+                                        <td>Ksh: {{ item.price }}</td>
+                                        <td>Ksh: {{ item.total_price }}</td>
+                                    </tr>
+                                {% endwith %}
+                            {% endfor %}
+                          <tr>
+                            <td>Total</td>
+                            <td colspan="5"></td>
+                            <td>Ksh: {{ cart.get_total_price }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <p class="text-end">
+                          <a href="{% url 'shop:products' %}" class="btn btn-success">Continue shopping</a>
+                          <a href="{% url 'orders:create_order' %}" class="btn btn-success">Checkout</a>
+                      </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock content %}
