@@ -5,3 +5,5 @@ kijani-env/
 ./static_cdn
 static_cdn/
 db.sqlite3
+.conf
+*.conf
